@@ -1,0 +1,35 @@
+name: Nightly database backup
+
+# Exports the production database to the private R2 bucket "montague-common-hall-backups".
+# Backups are NOT stored as workflow artifacts: this repository is public, and the database holds
+# renters' and donors' names and email addresses.
+on:
+  schedule:
+    - cron: '17 7 * * *' # 3:17 am Eastern (2:17 am in winter)
+  workflow_dispatch:
+
+jobs:
+  backup:
+    if: vars.DEPLOY_ENABLED == 'true'
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Export and upload
+        run: |
+          stamp=$(date -u +%Y-%m-%d)
+          npx wrangler d1 export montague-common-hall --remote --output "db-$stamp.sql"
+          gzip "db-$stamp.sql"
+          npx wrangler r2 object put "montague-common-hall-backups/db/db-$stamp.sql.gz" \
+            --file "db-$stamp.sql.gz" --remote
+          echo "Backed up db-$stamp.sql.gz ($(stat -c%s db-$stamp.sql.gz) bytes)" >> "$GITHUB_STEP_SUMMARY"

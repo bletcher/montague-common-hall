@@ -1,0 +1,49 @@
+name: CI
+
+# Checks every pull request and every push to main: types, lint, migrations in sync, and a full
+# Cloudflare Worker build. Runs without any Cloudflare account or secrets.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    env:
+      PAYLOAD_SECRET: ci-only-not-a-real-secret
+      CLOUDFLARE_REMOTE_BINDINGS: 'false'
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Type check
+        run: npm run typecheck
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Migrations match the collections
+        # Builds a fresh local database from the migration files, then asks Payload whether the
+        # collections need a new migration. Fails if someone changed fields without creating one.
+        run: |
+          npx payload migrate
+          npx payload migrate:create --skip-empty ci-check
+          if [ -n "$(git status --porcelain src/migrations)" ]; then
+            echo "::error::Collections changed without a migration. Run: npm run payload migrate:create <name>"
+            git status --porcelain src/migrations
+            exit 1
+          fi
+
+      - name: Build the Cloudflare Worker
+        run: npx opennextjs-cloudflare build

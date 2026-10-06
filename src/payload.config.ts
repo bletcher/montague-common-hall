@@ -10,6 +10,14 @@ import { r2Storage } from '@payloadcms/storage-r2'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Pages } from './collections/Pages'
+import { News } from './collections/News'
+import { RentalInquiries } from './collections/RentalInquiries'
+import { Messages } from './collections/Messages'
+import { Subscribers } from './collections/Subscribers'
+import { SiteSettings } from './globals/SiteSettings'
+import { Home } from './globals/Home'
+import { Rentals } from './globals/Rentals'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -51,19 +59,26 @@ const cloudflareLogger = {
   silent: () => {},
 } as any // Use PayloadLogger type when it's exported
 
+// CLOUDFLARE_REMOTE_BINDINGS=false: build or run against the local database, no Cloudflare account needed.
+const localBindings = process.env.CLOUDFLARE_REMOTE_BINDINGS === 'false'
+
 const cloudflare =
-  isCLI || !isProduction
+  isCLI || !isProduction || localBindings
     ? await getCloudflareContextFromWrangler()
     : await getCloudflareContext({ async: true })
 
 export default buildConfig({
   admin: {
     user: Users.slug,
+    meta: {
+      titleSuffix: ' — Montague Common Hall',
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
+  collections: [Pages, News, Media, RentalInquiries, Messages, Subscribers, Users],
+  globals: [Home, Rentals, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -71,6 +86,9 @@ export default buildConfig({
   },
   db: sqliteD1Adapter({
     binding: cloudflare.env.D1,
+    // Schema changes always go through migration files (npm run payload migrate:create), so the
+    // local database and production are built the same way. See RUNBOOK.md.
+    push: false,
   }),
   logger: isProduction ? cloudflareLogger : undefined,
   plugins: [
@@ -87,7 +105,8 @@ function getCloudflareContextFromWrangler(): Promise<CloudflareContext> {
     ({ getPlatformProxy }) =>
       getPlatformProxy({
         environment: process.env.CLOUDFLARE_ENV,
-        remoteBindings: isProduction,
+        // Production builds and migrations talk to the live Cloudflare database.
+        remoteBindings: isProduction && !localBindings,
       } satisfies GetPlatformProxyOptions),
   )
 }

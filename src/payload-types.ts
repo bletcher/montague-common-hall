@@ -67,8 +67,13 @@ export interface Config {
   };
   blocks: {};
   collections: {
-    users: User;
+    pages: Page;
+    news: News;
     media: Media;
+    'rental-inquiries': RentalInquiry;
+    messages: Message;
+    subscribers: Subscriber;
+    users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -76,8 +81,13 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
-    users: UsersSelect<false> | UsersSelect<true>;
+    pages: PagesSelect<false> | PagesSelect<true>;
+    news: NewsSelect<false> | NewsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    'rental-inquiries': RentalInquiriesSelect<false> | RentalInquiriesSelect<true>;
+    messages: MessagesSelect<false> | MessagesSelect<true>;
+    subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -87,8 +97,16 @@ export interface Config {
     defaultIDType: number;
   };
   fallbackLocale: null;
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    home: Home;
+    rentals: Rental;
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    home: HomeSelect<false> | HomeSelect<true>;
+    rentals: RentalsSelect<false> | RentalsSelect<true>;
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   widgets: {
     collections: CollectionsWidget;
@@ -118,11 +136,170 @@ export interface UserAuthOperations {
   };
 }
 /**
+ * Simple text pages such as About, Directions, and Get Involved.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages".
+ */
+export interface Page {
+  id: number;
+  title: string;
+  /**
+   * The web address for this item. Leave blank to build it from the title.
+   */
+  slug: string;
+  /**
+   * One or two sentences shown under the title and in search results.
+   */
+  summary?: string | null;
+  image?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "media".
+ */
+export interface Media {
+  id: number;
+  /**
+   * Describe the photo for visitors who use screen readers, e.g. "The hall seen from the common in spring". For PDFs, use the document title.
+   */
+  alt: string;
+  _objectKey?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news".
+ */
+export interface News {
+  id: number;
+  title: string;
+  /**
+   * The web address for this item. Leave blank to build it from the title.
+   */
+  slug: string;
+  publishedDate: string;
+  /**
+   * A short summary shown on the News page and the home page.
+   */
+  excerpt?: string | null;
+  image?: (number | null) | Media;
+  content: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * Requests sent from the Rent the Hall page. Set the status as you work through each one.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rental-inquiries".
+ */
+export interface RentalInquiry {
+  id: number;
+  status: 'new' | 'in-progress' | 'booked' | 'closed';
+  /**
+   * Only board members see these notes.
+   */
+  boardNotes?: string | null;
+  name: string;
+  organization?: string | null;
+  email: string;
+  phone?: string | null;
+  eventType: 'private-party' | 'wedding' | 'performance' | 'dance' | 'class' | 'meeting' | 'recurring' | 'other';
+  isPublic?: boolean | null;
+  preferredDate: string;
+  alternateDate?: string | null;
+  startTime?: string | null;
+  endTime?: string | null;
+  attendance?: number | null;
+  spaces?: ('main-hall' | 'cloakroom' | 'kitchen')[] | null;
+  needsPA?: boolean | null;
+  alcohol?: boolean | null;
+  message?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * Notes sent from the Contact page.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages".
+ */
+export interface Message {
+  id: number;
+  status: 'new' | 'answered';
+  name: string;
+  email: string;
+  phone?: string | null;
+  message: string;
+  wantsNewsletter?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * People who asked for news by email. Copy new signups into Givebutter Contacts, then tick "Added to Givebutter".
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers".
+ */
+export interface Subscriber {
+  id: number;
+  email: string;
+  name?: string | null;
+  source?: ('footer' | 'contact' | 'import') | null;
+  addedToGivebutter?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
   id: number;
+  name: string;
+  role: 'editor' | 'admin';
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -142,24 +319,6 @@ export interface User {
     | null;
   password?: string | null;
   collection: 'users';
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "media".
- */
-export interface Media {
-  id: number;
-  alt: string;
-  _objectKey?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  url?: string | null;
-  thumbnailURL?: string | null;
-  filename?: string | null;
-  mimeType?: string | null;
-  filesize?: number | null;
-  width?: number | null;
-  height?: number | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -186,12 +345,32 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
-        relationTo: 'users';
-        value: number | User;
+        relationTo: 'pages';
+        value: number | Page;
+      } | null)
+    | ({
+        relationTo: 'news';
+        value: number | News;
       } | null)
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'rental-inquiries';
+        value: number | RentalInquiry;
+      } | null)
+    | ({
+        relationTo: 'messages';
+        value: number | Message;
+      } | null)
+    | ({
+        relationTo: 'subscribers';
+        value: number | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'users';
+        value: number | User;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -237,26 +416,32 @@ export interface PayloadMigration {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "users_select".
+ * via the `definition` "pages_select".
  */
-export interface UsersSelect<T extends boolean = true> {
+export interface PagesSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  summary?: T;
+  image?: T;
+  content?: T;
   updatedAt?: T;
   createdAt?: T;
-  email?: T;
-  resetPasswordToken?: T;
-  resetPasswordExpiration?: T;
-  salt?: T;
-  hash?: T;
-  resetPasswordRequestedAt?: T;
-  loginAttempts?: T;
-  lockUntil?: T;
-  sessions?:
-    | T
-    | {
-        id?: T;
-        createdAt?: T;
-        expiresAt?: T;
-      };
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "news_select".
+ */
+export interface NewsSelect<T extends boolean = true> {
+  title?: T;
+  slug?: T;
+  publishedDate?: T;
+  excerpt?: T;
+  image?: T;
+  content?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -274,6 +459,82 @@ export interface MediaSelect<T extends boolean = true> {
   filesize?: T;
   width?: T;
   height?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rental-inquiries_select".
+ */
+export interface RentalInquiriesSelect<T extends boolean = true> {
+  status?: T;
+  boardNotes?: T;
+  name?: T;
+  organization?: T;
+  email?: T;
+  phone?: T;
+  eventType?: T;
+  isPublic?: T;
+  preferredDate?: T;
+  alternateDate?: T;
+  startTime?: T;
+  endTime?: T;
+  attendance?: T;
+  spaces?: T;
+  needsPA?: T;
+  alcohol?: T;
+  message?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "messages_select".
+ */
+export interface MessagesSelect<T extends boolean = true> {
+  status?: T;
+  name?: T;
+  email?: T;
+  phone?: T;
+  message?: T;
+  wantsNewsletter?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "subscribers_select".
+ */
+export interface SubscribersSelect<T extends boolean = true> {
+  email?: T;
+  name?: T;
+  source?: T;
+  addedToGivebutter?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "users_select".
+ */
+export interface UsersSelect<T extends boolean = true> {
+  name?: T;
+  role?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  email?: T;
+  resetPasswordToken?: T;
+  resetPasswordExpiration?: T;
+  salt?: T;
+  hash?: T;
+  resetPasswordRequestedAt?: T;
+  loginAttempts?: T;
+  lockUntil?: T;
+  sessions?:
+    | T
+    | {
+        id?: T;
+        createdAt?: T;
+        expiresAt?: T;
+      };
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -314,6 +575,224 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home".
+ */
+export interface Home {
+  id: number;
+  heroHeading: string;
+  heroText: string;
+  heroImage?: (number | null) | Media;
+  spaces?:
+    | {
+        title: string;
+        text?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  campaignOn?: boolean | null;
+  campaignHeading?: string | null;
+  campaignText?: string | null;
+  campaignGoal?: number | null;
+  /**
+   * Update from the Givebutter dashboard.
+   */
+  campaignRaised?: number | null;
+  campaignProjects?:
+    | {
+        item: string;
+        id?: string | null;
+      }[]
+    | null;
+  campaignRecognition?: string | null;
+  campaignImage?: (number | null) | Media;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Rates and policies. Only admins can change these.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rentals".
+ */
+export interface Rental {
+  id: number;
+  intro: string;
+  image?: (number | null) | Media;
+  seasons?:
+    | {
+        name: string;
+        dates: string;
+        hourly: number;
+        hourlyLimit?: number | null;
+        dayRate: number;
+        note?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  extras?:
+    | {
+        item: string;
+        price: string;
+        id?: string | null;
+      }[]
+    | null;
+  rateNotes?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  faq?:
+    | {
+        question: string;
+        answer: string;
+        id?: string | null;
+      }[]
+    | null;
+  documents?:
+    | {
+        label: string;
+        file: number | Media;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  streetAddress: string;
+  mailingAddress: string;
+  email: string;
+  notificationEmail: string;
+  facebookUrl?: string | null;
+  mapUrl?: string | null;
+  /**
+   * From Google Calendar → Settings → this calendar → "Integrate calendar" → Calendar ID. The calendar must be set to public.
+   */
+  googleCalendarId?: string | null;
+  /**
+   * Givebutter Dashboard → Settings → Account ID.
+   */
+  givebutterAccountId?: string | null;
+  /**
+   * The code at the end of the campaign link, e.g. the "mch2026" in givebutter.com/mch2026.
+   */
+  givebutterCampaignCode?: string | null;
+  announcementOn?: boolean | null;
+  announcementText?: string | null;
+  announcementLink?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "home_select".
+ */
+export interface HomeSelect<T extends boolean = true> {
+  heroHeading?: T;
+  heroText?: T;
+  heroImage?: T;
+  spaces?:
+    | T
+    | {
+        title?: T;
+        text?: T;
+        id?: T;
+      };
+  campaignOn?: T;
+  campaignHeading?: T;
+  campaignText?: T;
+  campaignGoal?: T;
+  campaignRaised?: T;
+  campaignProjects?:
+    | T
+    | {
+        item?: T;
+        id?: T;
+      };
+  campaignRecognition?: T;
+  campaignImage?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "rentals_select".
+ */
+export interface RentalsSelect<T extends boolean = true> {
+  intro?: T;
+  image?: T;
+  seasons?:
+    | T
+    | {
+        name?: T;
+        dates?: T;
+        hourly?: T;
+        hourlyLimit?: T;
+        dayRate?: T;
+        note?: T;
+        id?: T;
+      };
+  extras?:
+    | T
+    | {
+        item?: T;
+        price?: T;
+        id?: T;
+      };
+  rateNotes?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  faq?:
+    | T
+    | {
+        question?: T;
+        answer?: T;
+        id?: T;
+      };
+  documents?:
+    | T
+    | {
+        label?: T;
+        file?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  streetAddress?: T;
+  mailingAddress?: T;
+  email?: T;
+  notificationEmail?: T;
+  facebookUrl?: T;
+  mapUrl?: T;
+  googleCalendarId?: T;
+  givebutterAccountId?: T;
+  givebutterCampaignCode?: T;
+  announcementOn?: T;
+  announcementText?: T;
+  announcementLink?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

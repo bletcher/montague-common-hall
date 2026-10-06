@@ -72,6 +72,7 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: ' — Montague Common Hall',
+      icons: [{ rel: 'icon', type: 'image/png', url: '/images/mch_icon.png' }],
     },
     importMap: {
       baseDir: path.resolve(dirname),

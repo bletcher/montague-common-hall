@@ -1,44 +1,33 @@
 import type { Metadata } from 'next'
-import Link from 'next/link'
 
 import { RentalInquiryForm } from '@/components/Forms'
-import { MediaImage } from '@/components/Media'
+import { PageIntro } from '@/components/PageIntro'
+import { getPage, pageMetadata } from '@/lib/pages'
 import { getClient, getSettings } from '@/lib/payload'
 import { turnstileSiteKey } from '@/lib/turnstile'
 
-export const metadata: Metadata = {
-  title: 'Rent the Hall',
-  description: 'Rates, policies, and a request form for renting the Montague Common Hall.',
-}
+export const generateMetadata = (): Promise<Metadata> =>
+  pageMetadata('rent', {
+    title: 'Rent the Hall',
+    description: 'Rates, policies, and a request form for renting the Montague Common Hall.',
+  })
 
 export default async function RentPage() {
   const payload = await getClient()
-  const [rentals, settings] = await Promise.all([payload.findGlobal({ slug: 'rentals', depth: 1 }), getSettings()])
+  const [page, rentals, settings] = await Promise.all([
+    getPage('rent'),
+    payload.findGlobal({ slug: 'rentals', depth: 1 }),
+    getSettings(),
+  ])
 
   return (
     <>
       <section className="section">
-        <div className="container page-grid">
-          <div className="prose">
-            <h1>Rent the Hall</h1>
-            <p className="lede">{rentals.intro}</p>
-            <ol className="steps">
-              <li>
-                <Link href="/calendar">Check the calendar</Link> for open dates.
-              </li>
-              <li>Read the rates and policies below.</li>
-              <li>
-                <a href="#request">Send a rental request</a>. A board member will confirm the date and send the rental
-                agreement.
-              </li>
-            </ol>
-          </div>
-          <MediaImage
-            media={rentals.image}
-            fallback={{ src: '/images/hall-front.jpg', alt: 'Front of the Montague Common Hall with its gothic windows' }}
-            className="page-photo"
-          />
-        </div>
+        <PageIntro
+          page={page}
+          fallbackTitle="Rent the Hall"
+          fallbackImage={{ src: '/images/hall-front.jpg', alt: 'Front of the Montague Common Hall with its gothic windows' }}
+        />
       </section>
 
       <section className="band band-blush">

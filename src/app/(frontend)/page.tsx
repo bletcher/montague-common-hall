@@ -115,7 +115,9 @@ export default async function HomePage() {
                 ))}
               </ul>
             )}
-            <Link href="/calendar">Full calendar →</Link>
+            <Link href="/calendar" className="more-link">
+              Full calendar →
+            </Link>
           </div>
           <div>
             <h2>The hall</h2>
@@ -129,7 +131,9 @@ export default async function HomePage() {
                 ))}
               </dl>
             )}
-            <Link href="/about">About the hall →</Link>
+            <Link href="/about" className="more-link">
+              About the hall →
+            </Link>
           </div>
         </div>
       </section>

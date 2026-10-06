@@ -136,7 +136,7 @@ export interface UserAuthOperations {
   };
 }
 /**
- * Simple text pages such as About, Directions, and Get Involved.
+ * Every page on the site except Home (edit that under Home page). On Rent the Hall, Calendar, Donate, News, and Contact, your text appears at the top and the rates, calendar, donation button, news list, or form is added below it automatically.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "pages".
@@ -149,11 +149,14 @@ export interface Page {
    */
   slug: string;
   /**
-   * One or two sentences shown under the title and in search results.
+   * Shown in larger type under the title, and used by search engines.
    */
   summary?: string | null;
   image?: (number | null) | Media;
-  content: {
+  /**
+   * Optional on pages that already have a form, calendar, or list below.
+   */
+  content?: {
     root: {
       type: string;
       children: {
@@ -167,7 +170,7 @@ export interface Page {
       version: number;
     };
     [k: string]: unknown;
-  };
+  } | null;
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
@@ -612,7 +615,7 @@ export interface Home {
   createdAt?: string | null;
 }
 /**
- * Rates and policies. Only admins can change these.
+ * The rates, other charges, FAQ, and documents on the Rent the Hall page. Only admins can change these. The page title, introduction, and photo are under Pages → Rent the Hall.
  *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "rentals".

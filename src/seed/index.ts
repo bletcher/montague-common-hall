@@ -43,7 +43,6 @@ const checklist = await upload('files/MCH-Renter-Checklist-2026.pdf', 'Renter ch
 const heating = await upload('files/hall_heating_2026.pdf', 'Heating instructions 2026')
 const cooling = await upload('files/hall_cooling_2026.pdf', 'Cooling instructions 2026')
 const hallPhoto = await upload('images/page_page_63_small.jpg', 'The Montague Common Hall in spring, crocuses on the lawn')
-const frontPhoto = await upload('images/blocks_blocks_1_small.jpg', 'Front of the hall, with its three gothic windows and Grange sign')
 const terracePlan = await upload(
   'images/section_TextImage-13_small.jpg',
   'Architectural drawing of the planned accessible entrance ramp, terrace, and garden',
@@ -99,9 +98,7 @@ await payload.updateGlobal({
 await payload.updateGlobal({
   slug: 'rentals',
   data: {
-    intro:
-      'The Montague Common Hall has a large main hall with a small stage and piano, a spacious cloakroom and entry way, a rustic kitchen and dining hall, and two bathrooms. We are fond of our old hall and love to see it used.',
-    image: frontPhoto.id,
+    intro: '(retired: edit the introduction under Pages, Rent the Hall)',
     seasons: [
       { name: 'Spring and summer', dates: 'May 1 – October 1', hourly: 30, hourlyLimit: 6, dayRate: 200 },
       { name: 'Fall and winter', dates: 'October 2 – April 30', hourly: 40, hourlyLimit: 6, dayRate: 275, note: 'Heat included.' },

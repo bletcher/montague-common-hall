@@ -48,6 +48,25 @@ Production applies pending migrations at the start of every deploy, before the n
 Prefer additive changes (new optional fields). Renaming or removing a field drops its data —
 take a manual backup first (below).
 
+**Read every generated migration before committing it.** If it contains `CREATE TABLE __new_…`
+followed by `DROP TABLE`, it is rebuilding a table. On D1, dropping a table that other tables
+point at (arrays, blocks, relationships) can cascade and **delete their rows** — e.g. rebuilding
+`rentals` would wipe the rates, FAQ, and documents. Changing `required`, `defaultValue`, or
+removing a field with a relationship all trigger rebuilds. Instead, leave the old field in place
+with `admin: { hidden: true }` (see `src/globals/Rentals.ts`), or write the migration by hand.
+
+Data-only changes (creating starting content) can be hand-written migrations too; see
+`src/migrations/20261006_220000_system_pages.ts`. Add them to `src/migrations/index.ts`.
+
+## Pages the board can edit
+
+Every page except Home is a document under **Pages** in the admin panel. On Rent the Hall,
+Calendar, Donate, News, and Contact the page text appears first and the code adds the rates,
+calendar, donation button, news list, or form below it. The pages listed in
+`src/lib/system-pages.ts` can't be deleted or have their web address changed, because the menu
+links to them. New pages the board creates appear at `/<slug>` but aren't added to the menu
+automatically — the menu is in `src/components/Header.tsx`.
+
 ## Checks before merging
 
 CI runs on every pull request: type check, lint, the migration check, and a full Worker build.

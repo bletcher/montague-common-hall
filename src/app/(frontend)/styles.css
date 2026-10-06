@@ -858,3 +858,71 @@ a:hover {
   font-size: var(--step-1);
   padding: 14px 36px;
 }
+
+/* ---------- Touch targets ----------
+ * Standalone links and checkboxes get at least ~44px of tappable height on touch screens.
+ * Links inside sentences are left alone (they follow the text). */
+.more-link,
+.doc-list a,
+.contact-card a,
+.site-footer a {
+  display: inline-block;
+  padding-block: 10px;
+}
+.footer-grid p,
+.footer-links li {
+  margin: 0;
+}
+.form input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  accent-color: var(--sage-deep);
+}
+.form label.check {
+  min-height: 44px;
+  cursor: pointer;
+}
+
+/* On narrow phones, stack each charge under its label instead of squeezing two columns. */
+@media (max-width: 520px) {
+  .extras,
+  .extras tbody,
+  .extras tr,
+  .extras th,
+  .extras td {
+    display: block;
+    width: 100%;
+  }
+  .extras tr {
+    border: 1px solid var(--rule);
+    border-bottom: 0;
+  }
+  .extras tr:last-child {
+    border-bottom: 1px solid var(--rule);
+  }
+  .extras th,
+  .extras td {
+    border: 0;
+    padding: 6px 12px;
+  }
+  .extras th {
+    font-weight: 500;
+    padding-bottom: 0;
+  }
+  .extras td {
+    color: var(--ink-soft);
+    padding-top: 2px;
+  }
+}
+
+/* Put the FAQ's spacing on the clickable question itself, so the whole row is tappable. */
+.faq details {
+  padding: 0;
+}
+.faq summary {
+  padding: 12px 0;
+}
+.faq details p {
+  margin: 0 0 14px;
+}

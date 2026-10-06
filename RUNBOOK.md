@@ -127,6 +127,23 @@ required reviewer there if you want a human to approve each deploy.
 - **Resend**: add domain `mail.montaguecommonhall.org`, put its DNS records in Cloudflare, create an
   API key with send-only access → Worker secret. Needs DNS on Cloudflare, so this happens at cutover.
 
+## Patched dependency: Payload password hashing
+
+`patches/payload+3.90.2.patch` lowers Payload's password-hashing work factor (PBKDF2) from 600,000
+to 100,000 iterations, because Cloudflare Workers refuse anything higher and every login and signup
+fails otherwise ([payload#18274](https://github.com/payloadcms/payload/issues/18274)). Approved by
+the board in October 2026. `npm install` / `npm ci` re-apply it automatically (`postinstall`).
+
+When upgrading Payload:
+
+- If the install fails with "patch-package: failed to apply", Payload changed that file. Check
+  whether the release includes the Workers fix (PR #18276) before deleting the patch.
+- **Never** let the count go back to 600,000 while users exist. Their stored passwords were made at
+  100,000, so every board member would be locked out.
+- Create users through the admin panel, not `payload run` scripts, so hashing happens the same way.
+
+Use long, unique passwords from a password manager; that matters far more than the iteration count.
+
 ## Backups and restore
 
 - **Nightly**: the Backup workflow exports the database to

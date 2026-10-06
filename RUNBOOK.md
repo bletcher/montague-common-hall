@@ -55,7 +55,22 @@ To run the same build locally without a Cloudflare account:
 
 ```sh
 CLOUDFLARE_REMOTE_BINDINGS=false npx opennextjs-cloudflare build
-npx wrangler dev               # serves the built Worker at http://localhost:8787 on the local database
+npx wrangler dev --local       # serves the built Worker at http://localhost:8787 on the local database
+```
+
+**Always pass `--local` to `wrangler dev`.** The database and media bindings in `wrangler.jsonc`
+are marked `"remote": true` so that production builds, migrations, and the seed reach the live
+database. Without `--local`, `wrangler dev` would read and write the live database too.
+(`npm run dev` is always local.)
+
+### Running something against production from your machine
+
+Needs `npx wrangler login` with access to the hall's account. Example — apply migrations:
+
+```powershell
+$env:CLOUDFLARE_ACCOUNT_ID='ce00c647d63be3f4c32067841fa63003'; $env:NODE_ENV='production'; $env:PAYLOAD_SECRET='ignore'
+npx payload migrate
+Remove-Item Env:NODE_ENV, Env:PAYLOAD_SECRET
 ```
 
 ## One-time Cloudflare setup

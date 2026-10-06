@@ -31,14 +31,17 @@ export const p = (...parts: Inline[]): Node => ({ ...base, type: 'paragraph', te
 
 export const h = (tag: 'h2' | 'h3', value: string): Node => ({ ...base, type: 'heading', tag, children: [text(value)] })
 
-export const ul = (...items: Inline[][]): Node => ({
+const list = (tag: 'ul' | 'ol', items: Inline[][]): Node => ({
   ...base,
   type: 'list',
-  listType: 'bullet',
+  listType: tag === 'ul' ? 'bullet' : 'number',
   start: 1,
-  tag: 'ul',
+  tag,
   children: items.map((parts, i) => ({ ...base, type: 'listitem', value: i + 1, children: inline(parts) })),
 })
+
+export const ul = (...items: Inline[][]) => list('ul', items)
+export const ol = (...items: Inline[][]) => list('ol', items)
 
 export const doc = (...children: Node[]) => ({
   root: { ...base, type: 'root', children },

@@ -10,12 +10,15 @@ import {
   subscribeLinks,
   type HallEvent,
 } from '@/lib/calendar'
+import { PageIntro } from '@/components/PageIntro'
+import { getPage, pageMetadata } from '@/lib/pages'
 import { getSettings } from '@/lib/payload'
 
-export const metadata: Metadata = {
-  title: 'Calendar',
-  description: 'Dances, concerts, classes, and community events at the Montague Common Hall.',
-}
+export const generateMetadata = (): Promise<Metadata> =>
+  pageMetadata('calendar', {
+    title: 'Calendar',
+    description: 'Dances, concerts, classes, and community events at the Montague Common Hall.',
+  })
 
 type Props = { searchParams: Promise<{ month?: string }> }
 
@@ -44,7 +47,7 @@ const monthParam = (y: number, m: number) => {
 export default async function CalendarPage({ searchParams }: Props) {
   const { month } = await searchParams
   const { y, m } = parseMonth(month)
-  const settings = await getSettings()
+  const [settings, page] = await Promise.all([getSettings(), getPage('calendar')])
 
   // Plain calendar arithmetic on UTC dates; event times are compared via dayKey in the Hall's time zone.
   const first = new Date(Date.UTC(y, m - 1, 1))
@@ -76,7 +79,7 @@ export default async function CalendarPage({ searchParams }: Props) {
     <section className="section">
       <div className="container">
         <div className="cal-head">
-          <h1>Calendar</h1>
+          <h1>{page?.title ?? 'Calendar'}</h1>
           {links && (
             <div className="cal-subscribe">
               <span>Subscribe:</span>
@@ -85,6 +88,8 @@ export default async function CalendarPage({ searchParams }: Props) {
             </div>
           )}
         </div>
+
+        <PageIntro page={page} fallbackTitle="Calendar" bare hideTitle />
 
         {result.status === 'not-configured' && (
           <p className="notice">

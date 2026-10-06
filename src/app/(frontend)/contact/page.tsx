@@ -2,29 +2,25 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { ContactForm } from '@/components/Forms'
+import { PageIntro } from '@/components/PageIntro'
+import { getPage, pageMetadata } from '@/lib/pages'
 import { getSettings } from '@/lib/payload'
 import { turnstileSiteKey } from '@/lib/turnstile'
 
-export const metadata: Metadata = {
-  title: 'Contact',
-  description: 'Get in touch with the Friends of the Montague Common Hall.',
-}
+export const generateMetadata = (): Promise<Metadata> =>
+  pageMetadata('contact', {
+    title: 'Contact',
+    description: 'Get in touch with the Friends of the Montague Common Hall.',
+  })
 
 export default async function ContactPage() {
-  const settings = await getSettings()
+  const [page, settings] = await Promise.all([getPage('contact'), getSettings()])
 
   return (
     <section className="section">
       <div className="container page-grid">
         <div>
-          <h1>Contact</h1>
-          <p className="lede">
-            The hall is run entirely by volunteers. Send us a note and a board member will reply by email.
-          </p>
-          <p>
-            Want to rent the hall? Use the <Link href="/rent#request">rental request form</Link> so we have the
-            details we need.
-          </p>
+          <PageIntro page={page} fallbackTitle="Contact" bare />
           <ContactForm siteKey={turnstileSiteKey()} />
         </div>
         <aside className="contact-card">

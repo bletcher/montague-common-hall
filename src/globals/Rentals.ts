@@ -4,23 +4,22 @@ import { anyone, isAdmin } from '../access'
 
 export const Rentals: GlobalConfig = {
   slug: 'rentals',
-  label: 'Rent the Hall page',
+  label: 'Rental rates & FAQ',
   admin: {
     group: 'Content',
-    description: 'Rates and policies. Only admins can change these.',
+    description:
+      'The rates, other charges, FAQ, and documents on the Rent the Hall page. Only admins can change these. The page title, introduction, and photo are under Pages → Rent the Hall.',
   },
   access: { read: anyone, update: isAdmin },
   fields: [
+    // Retired: the Rent the Hall introduction and photo now live in Pages → Rent the Hall.
+    // Kept (hidden, unused) because removing them would rebuild the rentals table, and on D1
+    // dropping that table cascades and deletes the rates, FAQ, and documents stored under it.
+    { name: 'intro', type: 'textarea', required: true, admin: { hidden: true } },
+    { name: 'image', type: 'upload', relationTo: 'media', admin: { hidden: true } },
     {
       type: 'tabs',
       tabs: [
-        {
-          label: 'Introduction',
-          fields: [
-            { name: 'intro', type: 'textarea', required: true },
-            { name: 'image', type: 'upload', relationTo: 'media' },
-          ],
-        },
         {
           label: 'Rates',
           fields: [

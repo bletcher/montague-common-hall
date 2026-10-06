@@ -2,6 +2,8 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "main": ".open-next/worker.js",
   "name": "montague-common-hall",
+  // Friends of the Montague Common Hall. Pinned so a deploy can never land in someone's personal account.
+  "account_id": "ce00c647d63be3f4c32067841fa63003",
   "compatibility_date": "2025-08-15",
   "compatibility_flags": [
     // Enable Node.js API
@@ -18,8 +20,7 @@
   "d1_databases": [
     {
       "binding": "D1",
-      // Filled in once the Cloudflare account exists: npx wrangler d1 create montague-common-hall
-      "database_id": "DATABASE_ID",
+      "database_id": "bebf1045-4a06-4710-90c2-3fcfb23b8d40",
       "database_name": "montague-common-hall",
     },
   ],

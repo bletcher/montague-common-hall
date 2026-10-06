@@ -22,6 +22,9 @@
       "binding": "D1",
       "database_id": "bebf1045-4a06-4710-90c2-3fcfb23b8d40",
       "database_name": "montague-common-hall",
+      // Required: without it, production builds, migrations and the seed silently use a throwaway
+      // local database instead of the live one. Local dev stays local (see RUNBOOK.md).
+      "remote": true,
     },
   ],
   "services": [
@@ -35,6 +38,7 @@
     {
       "binding": "R2",
       "bucket_name": "montague-common-hall-media",
+      "remote": true,
     },
     // Create a R2 binding with the binding name "NEXT_INC_CACHE_R2_BUCKET"
     // {

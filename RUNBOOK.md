@@ -55,7 +55,22 @@ To run the same build locally without a Cloudflare account:
 
 ```sh
 CLOUDFLARE_REMOTE_BINDINGS=false npx opennextjs-cloudflare build
-npx wrangler dev               # serves the built Worker at http://localhost:8787 on the local database
+npx wrangler dev --local       # serves the built Worker at http://localhost:8787 on the local database
+```
+
+**Always pass `--local` to `wrangler dev`.** The database and media bindings in `wrangler.jsonc`
+are marked `"remote": true` so that production builds, migrations, and the seed reach the live
+database. Without `--local`, `wrangler dev` would read and write the live database too.
+(`npm run dev` is always local.)
+
+### Running something against production from your machine
+
+Needs `npx wrangler login` with access to the hall's account. Example — apply migrations:
+
+```powershell
+$env:CLOUDFLARE_ACCOUNT_ID='ce00c647d63be3f4c32067841fa63003'; $env:NODE_ENV='production'; $env:PAYLOAD_SECRET='ignore'
+npx payload migrate
+Remove-Item Env:NODE_ENV, Env:PAYLOAD_SECRET
 ```
 
 ## One-time Cloudflare setup
@@ -111,6 +126,23 @@ required reviewer there if you want a human to approve each deploy.
 - **Givebutter**: Account ID and campaign code go into `/admin` → Site settings → Donations.
 - **Resend**: add domain `mail.montaguecommonhall.org`, put its DNS records in Cloudflare, create an
   API key with send-only access → Worker secret. Needs DNS on Cloudflare, so this happens at cutover.
+
+## Patched dependency: Payload password hashing
+
+`patches/payload+3.90.2.patch` lowers Payload's password-hashing work factor (PBKDF2) from 600,000
+to 100,000 iterations, because Cloudflare Workers refuse anything higher and every login and signup
+fails otherwise ([payload#18274](https://github.com/payloadcms/payload/issues/18274)). Approved by
+the board in October 2026. `npm install` / `npm ci` re-apply it automatically (`postinstall`).
+
+When upgrading Payload:
+
+- If the install fails with "patch-package: failed to apply", Payload changed that file. Check
+  whether the release includes the Workers fix (PR #18276) before deleting the patch.
+- **Never** let the count go back to 600,000 while users exist. Their stored passwords were made at
+  100,000, so every board member would be locked out.
+- Create users through the admin panel, not `payload run` scripts, so hashing happens the same way.
+
+Use long, unique passwords from a password manager; that matters far more than the iteration count.
 
 ## Backups and restore
 

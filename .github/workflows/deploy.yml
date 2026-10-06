@@ -38,13 +38,27 @@ jobs:
       - name: Apply database migrations
         run: npm run deploy:database
 
+      - name: Confirm the live database has every migration
+        # Guards against migrations silently running on a throwaway local database
+        # (e.g. if "remote": true is ever dropped from wrangler.jsonc).
+        run: |
+          expected=$(ls src/migrations/*.ts | grep -v index.ts | wc -l)
+          applied=$(npx wrangler d1 execute montague-common-hall --remote --json             --command "SELECT count(*) AS n FROM payload_migrations WHERE batch > 0"             | node -e 'let d="";process.stdin.on("data",c=>d+=c).on("end",()=>console.log(JSON.parse(d)[0].results[0].n))')
+          echo "Live database: $applied of $expected migrations applied"
+          [ "$applied" -ge "$expected" ]
+
       - name: Build and deploy the Worker
         run: npm run deploy:app
 
       - name: Smoke test
+        # A fresh deploy can take a little while to reach every edge location, so retry briefly.
         run: |
           for path in / /rent /calendar /donate /contact /admin/login; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.SITE_URL }}$path")
+            for attempt in 1 2 3 4 5 6; do
+              code=$(curl -s -o /dev/null -w '%{http_code}' "${{ vars.SITE_URL }}$path")
+              [ "$code" = "200" ] && break
+              sleep 10
+            done
             echo "$path -> $code"
             [ "$code" = "200" ] || exit 1
           done

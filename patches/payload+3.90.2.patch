@@ -1,0 +1,15 @@
+diff --git a/node_modules/payload/dist/auth/strategies/local/generatePasswordSaltHash.js b/node_modules/payload/dist/auth/strategies/local/generatePasswordSaltHash.js
+index 7eb8b1c..05a4ccc 100644
+--- a/node_modules/payload/dist/auth/strategies/local/generatePasswordSaltHash.js
++++ b/node_modules/payload/dist/auth/strategies/local/generatePasswordSaltHash.js
+@@ -2,7 +2,9 @@ import crypto from 'crypto';
+ import { ValidationError } from '../../../errors/index.js';
+ import { password } from '../../../fields/validations.js';
+ const currentPasswordHashPrefix = 'pbkdf2-sha256-v1:';
+-const currentPasswordHashIterations = 600000;
++// Patched (approved by the board, Oct 2026): Cloudflare Workers reject PBKDF2 above 100,000
++// iterations. Matches Payload's proposed fix: https://github.com/payloadcms/payload/issues/18274
++const currentPasswordHashIterations = 100000;
+ const currentPasswordHashKeyLength = 32;
+ const legacyPasswordHashIterations = 25000;
+ const legacyPasswordHashKeyLength = 512;

@@ -679,7 +679,11 @@ export interface SiteSetting {
    */
   googleCalendarId?: string | null;
   /**
-   * Givebutter Dashboard → Settings → Account ID.
+   * Where the Donate button goes, e.g. the Givebutter campaign link once it is published, or a PayPal donate link. Leave blank to show only the mail-a-check instructions.
+   */
+  donateUrl?: string | null;
+  /**
+   * Optional. Fill in both Givebutter fields to show the donation form on the page itself instead of the button.
    */
   givebutterAccountId?: string | null;
   /**
@@ -785,6 +789,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   facebookUrl?: T;
   mapUrl?: T;
   googleCalendarId?: T;
+  donateUrl?: T;
   givebutterAccountId?: T;
   givebutterCampaignCode?: T;
   announcementOn?: T;

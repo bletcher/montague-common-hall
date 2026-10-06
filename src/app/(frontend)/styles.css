@@ -844,3 +844,17 @@ a:hover {
     transition: none !important;
   }
 }
+
+.donate-cta {
+  text-align: center;
+  padding: 28px 20px;
+  background: var(--blush-light);
+  border-radius: var(--radius);
+}
+.donate-cta .small {
+  margin: 10px 0 0;
+}
+.button-large {
+  font-size: var(--step-1);
+  padding: 14px 36px;
+}

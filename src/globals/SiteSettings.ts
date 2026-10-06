@@ -45,9 +45,23 @@ export const SiteSettings: GlobalConfig = {
           label: 'Donations',
           fields: [
             {
+              name: 'donateUrl',
+              label: 'Donation link',
+              type: 'text',
+              admin: {
+                description:
+                  'Where the Donate button goes, e.g. the Givebutter campaign link once it is published, or a PayPal donate link. Leave blank to show only the mail-a-check instructions.',
+              },
+              validate: (value: unknown) =>
+                !value || /^https:\/\/\S+$/.test(String(value)) || 'Use a full link starting with https://',
+            },
+            {
               name: 'givebutterAccountId',
               type: 'text',
-              admin: { description: 'Givebutter Dashboard → Settings → Account ID.' },
+              admin: {
+                description:
+                  'Optional. Fill in both Givebutter fields to show the donation form on the page itself instead of the button.',
+              },
             },
             {
               name: 'givebutterCampaignCode',

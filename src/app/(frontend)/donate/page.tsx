@@ -46,8 +46,8 @@ export default async function DonatePage() {
             </li>
           </ul>
           <p>
-            The form below accepts cards, PayPal, Venmo, Apple Pay, and bank transfer. Gifts to the Friends of the
-            Montague Common Hall, a 501(c)(3) nonprofit, are tax-deductible, and you&apos;ll get an emailed receipt.
+            {hasGivebutter && 'The form below accepts cards, PayPal, Venmo, Apple Pay, and bank transfer. '}
+            Gifts to the Friends of the Montague Common Hall, a 501(c)(3) nonprofit, are tax-deductible.
           </p>
           <p>
             Prefer a check? Make it out to <strong>Friends of the Montague Common Hall</strong> and mail it to{' '}
@@ -79,6 +79,13 @@ export default async function DonatePage() {
               .
             </p>
           </>
+        ) : settings.donateUrl ? (
+          <div className="donate-cta">
+            <a href={settings.donateUrl} className="button button-large">
+              Donate online
+            </a>
+            <p className="small">Opens our secure donation page.</p>
+          </div>
         ) : (
           <p className="notice">
             Online giving is being set up. In the meantime, please mail a check to {settings.mailingAddress}, or write to{' '}

@@ -57,7 +57,7 @@ await payload.updateGlobal({
     email: 'info@montaguecommonhall.org',
     notificationEmail: 'info@montaguecommonhall.org',
     facebookUrl: 'https://www.facebook.com/MontagueCommonHall/',
-    mapUrl: 'https://goo.gl/maps/eC3YADHxsNxE6qqb7',
+    mapUrl: 'https://maps.app.goo.gl/1Y94fMWp59Ld51Ez7',
   },
 })
 
@@ -213,7 +213,7 @@ await upsert('pages', 'directions', {
   title: 'Directions',
   summary: '34 Main Street, Montague Center, MA — on the town common.',
   content: doc(
-    p(text('34 Main Street, Montague, MA 01351', true), ' (mail: PO Box 223). ', link('Open in Google Maps', 'https://goo.gl/maps/eC3YADHxsNxE6qqb7'), '.'),
+    p(text('34 Main Street, Montague, MA 01351', true), ' (mail: PO Box 223). ', link('Open in Google Maps', 'https://maps.app.goo.gl/1Y94fMWp59Ld51Ez7'), '.'),
     h('h2', 'Parking'),
     p(
       'Parking is no longer permitted directly in front of the hall on Main Street. There is plenty of on-street parking just south of the hall and around the town common.',

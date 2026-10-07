@@ -25,7 +25,7 @@ export const SiteSettings: GlobalConfig = {
               defaultValue: 'info@montaguecommonhall.org',
             },
             { name: 'facebookUrl', type: 'text', defaultValue: 'https://www.facebook.com/MontagueCommonHall/' },
-            { name: 'mapUrl', label: 'Map link', type: 'text', defaultValue: 'https://goo.gl/maps/eC3YADHxsNxE6qqb7' },
+            { name: 'mapUrl', label: 'Map link', type: 'text', defaultValue: 'https://maps.app.goo.gl/1Y94fMWp59Ld51Ez7' },
           ],
         },
         {

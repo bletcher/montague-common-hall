@@ -329,6 +329,10 @@ a:hover {
 .hero-photo {
   max-height: 520px;
 }
+.page-photo-wide {
+  max-height: 480px;
+  margin-bottom: 32px;
+}
 .campaign-photo {
   background: #fff;
   border: 1px solid var(--rule);

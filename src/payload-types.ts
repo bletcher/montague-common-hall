@@ -154,6 +154,10 @@ export interface Page {
   summary?: string | null;
   image?: (number | null) | Media;
   /**
+   * Wide suits landscape photos such as a full hall.
+   */
+  imageSize?: ('side' | 'wide') | null;
+  /**
    * Optional on pages that already have a form, calendar, or list below.
    */
   content?: {
@@ -426,6 +430,7 @@ export interface PagesSelect<T extends boolean = true> {
   slug?: T;
   summary?: T;
   image?: T;
+  imageSize?: T;
   content?: T;
   updatedAt?: T;
   createdAt?: T;

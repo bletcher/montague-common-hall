@@ -30,6 +30,14 @@ export function PageIntro({ page, fallbackTitle, fallbackImage, bare, hideTitle,
   if (bare) return text
 
   const hasImage = Boolean(page?.image || fallbackImage)
+  if (hasImage && page?.imageSize === 'wide') {
+    return (
+      <div className="container narrow">
+        <MediaImage media={page.image} fallback={fallbackImage} className="page-photo page-photo-wide" />
+        {text}
+      </div>
+    )
+  }
   return (
     <div className={hasImage ? 'container page-grid' : 'container narrow'}>
       {text}

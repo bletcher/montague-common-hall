@@ -61,6 +61,17 @@ export const Pages: CollectionConfig = {
     },
     { name: 'image', label: 'Photo', type: 'upload', relationTo: 'media' },
     {
+      name: 'imageSize',
+      label: 'Photo size',
+      type: 'select',
+      defaultValue: 'side',
+      options: [
+        { label: 'Beside the text', value: 'side' },
+        { label: 'Wide, above the text', value: 'wide' },
+      ],
+      admin: { description: 'Wide suits landscape photos such as a full hall.' },
+    },
+    {
       name: 'content',
       label: 'Page text',
       type: 'richText',

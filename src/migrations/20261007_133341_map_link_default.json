@@ -40,6 +40,14 @@
           "notNull": false,
           "autoincrement": false
         },
+        "image_size": {
+          "name": "image_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'side'"
+        },
         "content": {
           "name": "content",
           "type": "text",
@@ -172,6 +180,14 @@
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
+        },
+        "version_image_size": {
+          "name": "version_image_size",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false,
+          "default": "'side'"
         },
         "version_content": {
           "name": "version_content",
@@ -2878,6 +2894,6 @@
   "internal": {
     "indexes": {}
   },
-  "id": "81d956cb-a0c9-4ae8-bb45-d7296569182f",
+  "id": "0f7539d1-f3cd-467f-b7c4-fe47b57dba08",
   "prevId": "00000000-0000-0000-0000-000000000000"
 }

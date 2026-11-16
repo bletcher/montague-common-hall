@@ -73,6 +73,7 @@ export interface Config {
     'rental-inquiries': RentalInquiry;
     messages: Message;
     subscribers: Subscriber;
+    tasks: Task;
     users: User;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
@@ -87,6 +88,7 @@ export interface Config {
     'rental-inquiries': RentalInquiriesSelect<false> | RentalInquiriesSelect<true>;
     messages: MessagesSelect<false> | MessagesSelect<true>;
     subscribers: SubscribersSelect<false> | SubscribersSelect<true>;
+    tasks: TasksSelect<false> | TasksSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
@@ -300,6 +302,23 @@ export interface Subscriber {
   createdAt: string;
 }
 /**
+ * Open items also appear on the dashboard, where you can tick them off.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tasks".
+ */
+export interface Task {
+  id: number;
+  title: string;
+  done?: boolean | null;
+  owner?: string | null;
+  due?: string | null;
+  notes?: string | null;
+  completedOn?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
@@ -374,6 +393,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'subscribers';
         value: number | Subscriber;
+      } | null)
+    | ({
+        relationTo: 'tasks';
+        value: number | Task;
       } | null)
     | ({
         relationTo: 'users';
@@ -516,6 +539,20 @@ export interface SubscribersSelect<T extends boolean = true> {
   name?: T;
   source?: T;
   addedToGivebutter?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tasks_select".
+ */
+export interface TasksSelect<T extends boolean = true> {
+  title?: T;
+  done?: T;
+  owner?: T;
+  due?: T;
+  notes?: T;
+  completedOn?: T;
   updatedAt?: T;
   createdAt?: T;
 }

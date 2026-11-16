@@ -19,9 +19,13 @@ type Props = {
 
 /** The editable top of a page: title, intro, rich text, and photo, all from Pages in the admin panel. */
 export function PageIntro({ page, fallbackTitle, fallbackImage, bare, hideTitle, children }: Props) {
+  const hasImage = Boolean(page?.image || fallbackImage)
+  // A wide photo sits between the title and the text; otherwise it goes beside the text.
+  const wide = !bare && hasImage && page?.imageSize === 'wide'
   const text = (
     <div className="prose">
       {!hideTitle && <h1>{page?.title ?? fallbackTitle}</h1>}
+      {wide && <MediaImage media={page?.image} fallback={fallbackImage} className="page-photo page-photo-wide" />}
       {page?.summary && <p className="lede">{page.summary}</p>}
       {page?.content && <RichText data={page.content} />}
       {children}
@@ -29,15 +33,7 @@ export function PageIntro({ page, fallbackTitle, fallbackImage, bare, hideTitle,
   )
   if (bare) return text
 
-  const hasImage = Boolean(page?.image || fallbackImage)
-  if (hasImage && page?.imageSize === 'wide') {
-    return (
-      <div className="container narrow">
-        <MediaImage media={page.image} fallback={fallbackImage} className="page-photo page-photo-wide" />
-        {text}
-      </div>
-    )
-  }
+  if (wide) return <div className="container narrow">{text}</div>
   return (
     <div className={hasImage ? 'container page-grid' : 'container narrow'}>
       {text}

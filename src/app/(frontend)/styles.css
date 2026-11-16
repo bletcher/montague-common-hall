@@ -349,7 +349,7 @@ a:hover {
 }
 .page-photo-wide {
   max-height: 480px;
-  margin-bottom: 32px;
+  margin: 8px 0 24px;
 }
 .campaign-photo {
   background: #fff;

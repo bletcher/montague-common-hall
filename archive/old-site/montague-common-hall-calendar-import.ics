@@ -1,0 +1,193 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Friends of the Montague Common Hall//Calendar import//EN
+CALSCALE:GREGORIAN
+X-WR-CALNAME:Montague Common Hall
+X-WR-TIMEZONE:America/New_York
+BEGIN:VTIMEZONE
+TZID:America/New_York
+BEGIN:DAYLIGHT
+TZOFFSETFROM:-0500
+TZOFFSETTO:-0400
+TZNAME:EDT
+DTSTART:19700308T020000
+RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU
+END:DAYLIGHT
+BEGIN:STANDARD
+TZOFFSETFROM:-0400
+TZOFFSETTO:-0500
+TZNAME:EST
+DTSTART:19701101T020000
+RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+UID:mch-old-20667@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261007T190000
+DTEND;TZID=America/New_York:20261007T203000
+RRULE:FREQ=WEEKLY;BYDAY=WE;UNTIL=20320101T035959Z
+SUMMARY:Montague Morris weekly practice
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Montague Morris weekly practice.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-15326@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261010T183000
+DTEND;TZID=America/New_York:20261010T213000
+RRULE:FREQ=MONTHLY;BYDAY=2SA;UNTIL=20311214T035959Z
+SUMMARY:2nd Saturday Open Mic
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Monthly open mic\, usually the 2nd Saturday of the month. Doors
+  and performer sign-ups start at 6:15. All types of performers welcome: mu
+ sicians\, poets\, singers\, dancers\, storytellers. Names are drawn for a 
+ random order\; expect 2–4 songs (10–15 minutes) depending on turnout. 
+ BYO food and beverage. Voluntary donations.\nhttps://www.facebook.com/mont
+ agueCommonHallOpenMic/
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25344@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261006T180000
+DTEND;TZID=America/New_York:20261006T190000
+RRULE:FREQ=WEEKLY;BYDAY=TU;UNTIL=20261230T035959Z
+SUMMARY:Community Yoga
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Heart-centered yoga. All levels of experience welcome. Sliding 
+ scale $7–$20\; no one will be turned away for lack of funds.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25317@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261009T183000
+DTEND;TZID=America/New_York:20261009T213000
+RRULE:FREQ=MONTHLY;BYDAY=2FR;UNTIL=20270612T035959Z
+SUMMARY:Montague Square Dance!
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Square dances with a live band and a guest caller every month. 
+ All dances are taught. 6:30–8 are simpler dances great for beginners\, f
+ amilies\, and kids\; after 8 they get more complex\, but everyone is still
+  welcome. Bring clean\, non-marking shoes and a water bottle. Suggested do
+ nation $7–$20.\nQuestions: montaguesquaredance@gmail.com\nhttps://www.fa
+ cebook.com/profile.php?id=100038849593692
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-11574@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20270101T120000
+DTEND;TZID=America/New_York:20270101T123000
+RRULE:FREQ=YEARLY;BYMONTH=1;BYMONTHDAY=1;UNTIL=20290102T035959Z
+SUMMARY:Sawmill Run
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Annual Sawmill Run.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25364@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261005T190000
+DTEND;TZID=America/New_York:20261005T204500
+SUMMARY:Andrew & Noah VanNorstrand with Rachel Bell concert
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Andrew and Noah VanNorstrand\, with Rachel Bell. Guitar\, fiddl
+ e\, mandolin\, feet\, vocals\, piano accordion: trad-grounded music with p
+ izazz! $20 in advance or at the door. Reservations: commonhallconcert@gmai
+ l.com
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25381@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261016T170000
+DTEND;TZID=America/New_York:20261016T183000
+SUMMARY:Montague marching band rehearsal!
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Montague marching band rehearsal\, preparing for Halloween. New
+  members welcome. Contact Jesse at tangledmusic@gmail.com for tunes and sh
+ eet music.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25382@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261023T170000
+DTEND;TZID=America/New_York:20261023T183000
+SUMMARY:Montague marching band rehearsal!
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Montague marching band rehearsal\, preparing for Halloween. New
+  members welcome. Contact Jesse at tangledmusic@gmail.com for tunes and sh
+ eet music.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25383@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261026T184500
+DTEND;TZID=America/New_York:20261026T203000
+SUMMARY:dance practice
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Grange clogging practice.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25373@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261031T160000
+DTEND;TZID=America/New_York:20261031T200000
+SUMMARY:MCH Halloween
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25378@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261112T180000
+DTEND;TZID=America/New_York:20261112T210000
+SUMMARY:Indivisible Montague Potluck & Meeting
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:6–7 pm community potluck\, 7–9 pm meeting.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25379@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261123T170000
+DTEND;TZID=America/New_York:20261123T213000
+SUMMARY:On hold for possible concert
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+STATUS:TENTATIVE
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25380@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261130T170000
+DTEND;TZID=America/New_York:20261130T213000
+SUMMARY:On hold for possible concert
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+STATUS:TENTATIVE
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25376@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261205T130000
+DTEND;TZID=America/New_York:20261205T220000
+SUMMARY:Private party w/PA (times tentative)
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+STATUS:TENTATIVE
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25377@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20261219T190000
+DTEND;TZID=America/New_York:20261219T210000
+SUMMARY:Montague Swing Dance
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+DESCRIPTION:Come dance the night away at this winter solstice event! A soci
+ al swing dance with live music from the Butterfly Swing Band\, 7–9 pm. B
+ eginners and experienced dancers all welcome. Cozy winter treats provided\
+ ; special outfits and costumes encouraged. Sliding scale $5–$35 to suppo
+ rt the band and the Common Hall.
+END:VEVENT
+BEGIN:VEVENT
+UID:mch-old-25375@montaguecommonhall.org
+DTSTAMP:20261025T152115Z
+DTSTART;TZID=America/New_York:20270626T080000
+DTEND;TZID=America/New_York:20270626T230000
+SUMMARY:Private Reception w/PA
+LOCATION:Montague Common Hall\, 34 Main St\, Montague\, MA 01351
+END:VEVENT
+END:VCALENDAR

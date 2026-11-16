@@ -5,6 +5,7 @@ import * as migration_20261006_215900_page_photo_size from './20261006_215900_pa
 import * as migration_20261006_220000_system_pages from './20261006_220000_system_pages';
 import * as migration_20261007_133341_map_link_default from './20261007_133341_map_link_default';
 import * as migration_20261007_140000_fix_map_link from './20261007_140000_fix_map_link';
+import * as migration_20261116_210021_board_todo_list from './20261116_210021_board_todo_list';
 
 export const migrations = [
   {
@@ -23,8 +24,6 @@ export const migrations = [
     name: '20261006_200758_donate_link',
   },
   {
-    // Adds columns only. Placed before system_pages because that migration (and fix_map_link)
-    // create pages through Payload, which writes every column the Pages collection has today.
     up: migration_20261006_215900_page_photo_size.up,
     down: migration_20261006_215900_page_photo_size.down,
     name: '20261006_215900_page_photo_size',
@@ -43,5 +42,10 @@ export const migrations = [
     up: migration_20261007_140000_fix_map_link.up,
     down: migration_20261007_140000_fix_map_link.down,
     name: '20261007_140000_fix_map_link',
+  },
+  {
+    up: migration_20261116_210021_board_todo_list.up,
+    down: migration_20261116_210021_board_todo_list.down,
+    name: '20261116_210021_board_todo_list'
   },
 ];

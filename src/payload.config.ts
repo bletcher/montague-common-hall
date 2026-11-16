@@ -8,6 +8,7 @@ import { CloudflareContext, getCloudflareContext } from '@opennextjs/cloudflare'
 import { GetPlatformProxyOptions } from 'wrangler'
 import { r2Storage } from '@payloadcms/storage-r2'
 
+import { Tasks } from './collections/Tasks'
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
@@ -77,8 +78,11 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    components: {
+      beforeDashboard: ['/components/admin/TodoDashboard#TodoDashboard'],
+    },
   },
-  collections: [Pages, News, Media, RentalInquiries, Messages, Subscribers, Users],
+  collections: [Pages, News, Media, RentalInquiries, Messages, Subscribers, Tasks, Users],
   globals: [Home, Rentals, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',

@@ -1,4 +1,4 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
+import { RichText } from '@/components/RichText'
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -35,7 +35,7 @@ export default async function NewsPost({ params }: Props) {
           <Link href="/news">News</Link> · {new Date(post.publishedDate).toLocaleDateString('en-US', { dateStyle: 'long' })}
         </p>
         <h1>{post.title}</h1>
-        {post.image && <MediaImage media={post.image} className="post-photo" />}
+        {post.image && <MediaImage media={post.image} className="post-photo" embedPdf />}
         <RichText data={post.content} />
       </div>
     </article>

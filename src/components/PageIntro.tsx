@@ -1,8 +1,8 @@
-import { RichText } from '@payloadcms/richtext-lexical/react'
 import type { ReactNode } from 'react'
 
 import type { Page } from '@/payload-types'
 import { MediaImage } from './Media'
+import { RichText } from './RichText'
 
 type Props = {
   page: Page | null
@@ -25,7 +25,7 @@ export function PageIntro({ page, fallbackTitle, fallbackImage, bare, hideTitle,
   const text = (
     <div className="prose">
       {!hideTitle && <h1>{page?.title ?? fallbackTitle}</h1>}
-      {wide && <MediaImage media={page?.image} fallback={fallbackImage} className="page-photo page-photo-wide" />}
+      {wide && <MediaImage media={page?.image} fallback={fallbackImage} className="page-photo page-photo-wide" embedPdf />}
       {page?.summary && <p className="lede">{page.summary}</p>}
       {page?.content && <RichText data={page.content} />}
       {children}
@@ -37,7 +37,7 @@ export function PageIntro({ page, fallbackTitle, fallbackImage, bare, hideTitle,
   return (
     <div className={hasImage ? 'container page-grid' : 'container narrow'}>
       {text}
-      {hasImage && <MediaImage media={page?.image} fallback={fallbackImage} className="page-photo" />}
+      {hasImage && <MediaImage media={page?.image} fallback={fallbackImage} className="page-photo" embedPdf />}
     </div>
   )
 }

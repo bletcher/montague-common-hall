@@ -34,7 +34,15 @@ export const News: CollectionConfig = {
       type: 'textarea',
       admin: { description: 'A short summary shown on the News page and the home page.' },
     },
-    { name: 'image', type: 'upload', relationTo: 'media' },
+    {
+      name: 'image',
+      label: 'Photo or PDF',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        description: 'Shown above the post. A PDF, such as a flyer, is shown on the page with a link to open it.',
+      },
+    },
     { name: 'content', type: 'richText', required: true },
   ],
 }

@@ -321,6 +321,24 @@ a:hover {
 }
 .hero-photo,
 .page-photo,
+.pdf {
+  margin: 0 0 24px;
+}
+.pdf-frame {
+  display: block;
+  width: 100%;
+  height: min(80vh, 900px);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.pdf-fallback {
+  display: block;
+  padding: 16px;
+}
+.pdf figcaption {
+  margin-top: 8px;
+  font-size: var(--step--1);
+}
 .campaign-photo {
   border-radius: var(--radius);
   width: 100%;

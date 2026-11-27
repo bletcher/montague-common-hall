@@ -104,9 +104,8 @@ a:hover {
   margin: 0 auto;
   padding: 0 20px;
 }
-.narrow {
-  max-width: 780px;
-}
+/* Single-column pages use the full container width, so every page lines up with the header's
+   left and right edges. (.narrow used to center them in a 780px column.) */
 
 .visually-hidden {
   position: absolute !important;
@@ -209,6 +208,11 @@ a:hover {
   margin-left: auto;
   flex: none;
 }
+/* 15% smaller than a standard small button. Doubled class so it outranks .button's font reset. */
+.button.nav-donate {
+  font-size: 0.85em;
+  padding: 7px 14px;
+}
 
 @media (max-width: 860px) {
   .nav-inner {
@@ -308,6 +312,14 @@ a:hover {
 
 .prose {
   max-width: 68ch;
+}
+/* On single-column pages the text runs the full width, to the same right edge as the header. */
+.narrow .prose,
+.narrow .lede {
+  max-width: none;
+}
+.container.prose {
+  max-width: var(--container);
 }
 .prose ul,
 .prose ol {

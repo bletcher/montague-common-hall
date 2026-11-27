@@ -208,9 +208,10 @@ a:hover {
   margin-left: auto;
   flex: none;
 }
-/* 15% smaller than a standard small button. Doubled class so it outranks .button's font reset. */
+/* A compact button with near-normal-size text (0.85em, then 15% bigger). Doubled class so it
+   outranks .button's font reset. */
 .button.nav-donate {
-  font-size: 0.85em;
+  font-size: 0.98em;
   padding: 7px 14px;
 }
 

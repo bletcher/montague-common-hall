@@ -5,7 +5,6 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 export const NAV = [
-  { href: '/', label: 'Home' },
   { href: '/about', label: 'About the Hall' },
   { href: '/rent', label: 'Rent the Hall' },
   { href: '/calendar', label: 'Calendar' },
@@ -19,7 +18,7 @@ export function Header({ address }: { address: string }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
-  const isCurrent = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href))
+  const isCurrent = (href: string) => pathname.startsWith(href)
 
   return (
     <header className="site-header">

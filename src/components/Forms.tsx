@@ -3,7 +3,7 @@
 import { useActionState } from 'react'
 
 import { submitMessage, submitRentalInquiry, subscribe, type FormState } from '@/app/(frontend)/actions'
-import { eventTypes, spaces } from '@/lib/options'
+import { eventTypes } from '@/lib/options'
 import { Turnstile } from './Turnstile'
 
 const initial: FormState = { status: 'idle' }
@@ -101,14 +101,6 @@ export function RentalInquiryForm({ siteKey, email }: { siteKey: string; email: 
           <input name="endTime" type="time" />
         </label>
       </div>
-      <fieldset>
-        <legend>Spaces you need</legend>
-        {spaces.map((s) => (
-          <label key={s.value} className="check">
-            <input type="checkbox" name="spaces" value={s.value} /> {s.label}
-          </label>
-        ))}
-      </fieldset>
       <fieldset>
         <legend>Anything else</legend>
         <label className="check">

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 import { ContactForm } from '@/components/Forms'
+import { MapLink } from '@/components/MapLink'
 import { PageIntro } from '@/components/PageIntro'
 import { getPage, pageMetadata } from '@/lib/pages'
 import { getSettings } from '@/lib/payload'
@@ -32,11 +33,10 @@ export default async function ContactPage() {
           <p>
             <a href={`mailto:${settings.email}`}>{settings.email}</a>
           </p>
-          {settings.mapUrl && (
-            <p>
-              <a href={settings.mapUrl}>Map</a> · <Link href="/directions">Directions</Link>
-            </p>
-          )}
+          {settings.mapUrl && <MapLink href={settings.mapUrl} />}
+          <p>
+            <Link href="/directions">Directions and parking</Link>
+          </p>
         </aside>
       </div>
     </section>

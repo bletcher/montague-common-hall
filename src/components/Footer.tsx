@@ -2,6 +2,7 @@ import Link from 'next/link'
 
 import type { SiteSetting } from '@/payload-types'
 import { SubscribeForm } from './Forms'
+import { MapLink } from './MapLink'
 
 export function Footer({ settings, siteKey }: { settings: SiteSetting; siteKey: string }) {
   return (
@@ -9,7 +10,13 @@ export function Footer({ settings, siteKey }: { settings: SiteSetting; siteKey: 
       <div className="container footer-grid">
         <div>
           <p className="footer-title">Montague Common Hall</p>
-          <p>{settings.streetAddress}</p>
+          {settings.mapUrl ? (
+            <MapLink href={settings.mapUrl} className="map-link-small" textFirst>
+              {settings.streetAddress}
+            </MapLink>
+          ) : (
+            <p>{settings.streetAddress}</p>
+          )}
           <p>Mail: {settings.mailingAddress}</p>
           <p>
             <a href={`mailto:${settings.email}`}>{settings.email}</a>

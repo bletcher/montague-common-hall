@@ -6,6 +6,7 @@ import * as migration_20261006_220000_system_pages from './20261006_220000_syste
 import * as migration_20261007_133341_map_link_default from './20261007_133341_map_link_default';
 import * as migration_20261007_140000_fix_map_link from './20261007_140000_fix_map_link';
 import * as migration_20261116_210021_board_todo_list from './20261116_210021_board_todo_list';
+import * as migration_20261127_220000_parking_map from './20261127_220000_parking_map';
 
 export const migrations = [
   {
@@ -47,5 +48,10 @@ export const migrations = [
     up: migration_20261116_210021_board_todo_list.up,
     down: migration_20261116_210021_board_todo_list.down,
     name: '20261116_210021_board_todo_list'
+  },
+  {
+    up: migration_20261127_220000_parking_map.up,
+    down: migration_20261127_220000_parking_map.down,
+    name: '20261127_220000_parking_map',
   },
 ];

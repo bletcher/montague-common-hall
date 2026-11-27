@@ -323,6 +323,45 @@ a:hover {
 }
 .hero-photo,
 .page-photo,
+.campaign-photo {
+  border-radius: var(--radius);
+  width: 100%;
+  object-fit: cover;
+}
+/* Photos added to page text (e.g. the parking map) */
+.prose img {
+  margin: 8px 0 24px;
+}
+.map-link {
+  display: block;
+  max-width: 320px;
+  margin: 12px 0;
+  text-decoration: none;
+}
+.map-link img,
+.prose .map-link img {
+  margin: 0;
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+}
+.map-link span {
+  display: block;
+  margin-top: 6px;
+  text-decoration: underline;
+}
+.map-link-text-first span {
+  margin: 0 0 8px;
+}
+.map-link-small {
+  max-width: none;
+  margin: 0 0 12px;
+}
+.map-link-small img {
+  max-width: 220px;
+}
 .pdf {
   margin: 0 0 24px;
 }
@@ -340,11 +379,6 @@ a:hover {
 .pdf figcaption {
   margin-top: 8px;
   font-size: var(--step--1);
-}
-.campaign-photo {
-  border-radius: var(--radius);
-  width: 100%;
-  object-fit: cover;
 }
 .hero-photo {
   max-height: 520px;

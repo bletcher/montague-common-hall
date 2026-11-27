@@ -37,11 +37,14 @@ export default async function HomePage() {
             <h1>{home.heroHeading}</h1>
             <p className="lede">{home.heroText}</p>
             <div className="button-row">
-              <Link href="/rent" className="button">
-                Rent the hall
+              <Link href="/calendar" className="button">
+                Event calendar
               </Link>
-              <Link href="/calendar" className="button button-quiet">
-                See what&apos;s on
+              <Link href="/directions#parking" className="button button-quiet">
+                Where do I park?
+              </Link>
+              <Link href="/rent" className="button button-quiet">
+                Rent the hall
               </Link>
             </div>
           </div>

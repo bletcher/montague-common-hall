@@ -41,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             )}
           </div>
         )}
-        <Header address={settings.streetAddress} />
+        <Header />
         <main id="main">{children}</main>
         <Footer settings={settings} siteKey={siteKey} />
       </body>

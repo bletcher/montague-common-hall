@@ -5,21 +5,19 @@ import { usePathname } from 'next/navigation'
 import { useState } from 'react'
 
 export const NAV = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About the Hall' },
-  { href: '/rent', label: 'Rent the Hall' },
+  { href: '/about', label: 'About' },
+  { href: '/rent', label: 'Rentals' },
   { href: '/calendar', label: 'Calendar' },
-  { href: '/donate', label: 'Donate' },
   { href: '/news', label: 'News' },
   { href: '/directions', label: 'Directions' },
   { href: '/contact', label: 'Contact' },
 ]
 
-export function Header({ address }: { address: string }) {
+export function Header() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
 
-  const isCurrent = (href: string) => (href === '/' ? pathname === '/' : pathname.startsWith(href))
+  const isCurrent = (href: string) => pathname.startsWith(href)
 
   return (
     <header className="site-header">
@@ -32,7 +30,6 @@ export function Header({ address }: { address: string }) {
             <span className="brand-name">Montague Common Hall</span>
             <span className="brand-tag">Community Center &amp; Performing Arts Space in Western Massachusetts</span>
           </Link>
-          <span className="brand-address">{address}</span>
         </div>
       </div>
       <nav className="nav" aria-label="Main">
@@ -59,6 +56,15 @@ export function Header({ address }: { address: string }) {
               </li>
             ))}
           </ul>
+          {/* Donate sits apart as a button, and stays visible on phones when the menu is closed. */}
+          <Link
+            href="/donate"
+            className="button button-small nav-donate"
+            aria-current={isCurrent('/donate') ? 'page' : undefined}
+            onClick={() => setOpen(false)}
+          >
+            Donate
+          </Link>
         </div>
       </nav>
     </header>

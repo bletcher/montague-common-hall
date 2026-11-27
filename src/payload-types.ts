@@ -218,6 +218,9 @@ export interface News {
    * A short summary shown on the News page and the home page.
    */
   excerpt?: string | null;
+  /**
+   * Shown above the post. A PDF, such as a flyer, is shown on the page with a link to open it.
+   */
   image?: (number | null) | Media;
   content: {
     root: {
